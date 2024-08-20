@@ -1,14 +1,14 @@
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 
 public class task{
     private int id;
     private String title;
     private String description;
-    private LocalDateTime compelteionDate;
+    private LocalDate compelteionDate;
     private boolean isComplete;
 
-    public task(int id, String title, String description, LocalDateTime compelteionDate, boolean isComplete) {
+    public task(int id, String title, String description, LocalDate compelteionDate, boolean isComplete) {
         this.id = id;
         this.title = title;
         this.description = description;
@@ -18,7 +18,7 @@ public class task{
 
     
 
-    public void editTask(String title, String description, LocalDateTime compelteionDate) {
+    public void editTask(String title, String description, LocalDate compelteionDate) {
         this.title = title;
         this.description = description;
         this.compelteionDate = compelteionDate;
@@ -49,11 +49,11 @@ public class task{
         this.description = description;
     }
 
-    public LocalDateTime getCompelteionDate() {
+    public LocalDate getCompelteionDate() {
         return compelteionDate;
     }
 
-    public void setCompelteionDate(LocalDateTime compelteionDate) {
+    public void setCompelteionDate(LocalDate compelteionDate) {
         this.compelteionDate = compelteionDate;
     }
 

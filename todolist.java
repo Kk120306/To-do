@@ -1,20 +1,27 @@
-import java.time.LocalDateTime;
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
 
+
 public class todolist{
     private List<task> tasks;
     private int taskId;
+    final String filename = "tasks.csv";
 
     public todolist(){
         this.tasks = new ArrayList<>();
         this.taskId = 1;
     }
 
-    public void addTask(String title, String desciption, LocalDateTime completion, boolean isComp){
+    public void addTask(String title, String desciption, LocalDate completion, boolean isComp){
         task work = new task(taskId++, title, desciption, completion, isComp);
         tasks.add(work);
         System.out.println("The task has successfully been placed!");
@@ -72,6 +79,50 @@ public class todolist{
             }
         });
     }
+
+    public void loadData(){
+        int count =0;
+        try(BufferedReader br = new BufferedReader(new FileReader(filename))){;
+            String line;
+            while ((line = br.readLine()) != null) {
+                String [] values = line.split(",");
+                int id = Integer.valueOf(values[0]);
+                String title = values[1];
+                String desciption = values[2];
+                String date = values[3];
+                LocalDate completionDate = LocalDate.parse(date);
+                boolean isComplete = Boolean.parseBoolean(values[4]);
+
+                task loadedTask = new task(id, title, desciption, completionDate, isComplete);
+                tasks.add(loadedTask);
+
+                if (id >= taskId) {
+                    taskId = id + 1;
+                }
+                count++;
+                System.out.println("Successfully loaded task (Count:" + count + ")");
+
+            }
+        }catch (IOException e){
+            System.out.println("Error loading data from "+ filename);
+        }
+    }
+    
+     public void saveData() {
+        try (BufferedWriter bw = new BufferedWriter(new FileWriter(filename))) {
+            for (task work : tasks) {
+                bw.write(work.getId() + "," +
+                         work.getTitle() + "," +
+                         work.getDescription() + "," +
+                         work.getCompelteionDate() + "," +
+                         work.isComplete());
+                bw.newLine();
+            }
+            System.out.println("Data has been successfully saved.");
+        } catch (IOException e) {
+            System.err.println("Error saving data: " + e.getMessage());
+        }
+     }
 
 
     public List<task> getTasks() {
