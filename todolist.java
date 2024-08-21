@@ -28,17 +28,23 @@ public class todolist{
 
     }
 
-    public void removeTask(int id){
-        task removal = tasks.get(id);
-        if (removal != null){
+    public List<task> removeTask(task t) {
+        // Check if the task exists in the list using its ID
+        task removal = tasks.stream()
+                            .filter(task -> task.getId() == t.getId())
+                            .findFirst()
+                            .orElse(null);
+    
+        if (removal != null) {
             tasks.remove(removal);
-            System.out.println("Task has been successfully been removed");
+            System.out.println("Task has been successfully removed.");
+        } else {
+            System.out.println("This task does not currently exist.");
         }
-        else{
-            System.out.println("This task does not currently exist");
-        }
+    
+        // Return the updated list of tasks
+        return tasks;
     }
-
     public task getTaskById(int id) {
         return tasks.stream()
                 .filter(task -> task.getId() == id)
@@ -71,14 +77,17 @@ public class todolist{
 
     }
 
-    public void sortTasksByCompletionDate() {
-        Collections.sort(tasks, new Comparator<task>() {
-            @Override 
+    public List<task> sortTasksByCompletionDate() {
+        List<task> sortedTasks = new ArrayList<>(tasks);
+        Collections.sort(sortedTasks, new Comparator<task>() {
+            @Override
             public int compare(task t1, task t2) {
                 return t1.getCompelteionDate().compareTo(t2.getCompelteionDate());
             }
         });
+        return sortedTasks;
     }
+    
 
     public void loadData(){
         int count =0;
