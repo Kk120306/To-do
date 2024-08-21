@@ -20,7 +20,7 @@ public class ToDoApp extends JFrame {
         setLayout(new BorderLayout());
         taskDisplayArea = new JTextArea();
         taskDisplayArea.setEditable(false);
-        JScrollPane taskScrollPane = new JScrollPane(taskDisplayArea);
+
 
         // Tasks panel
         tasksPanel = new JPanel();
@@ -36,7 +36,7 @@ public class ToDoApp extends JFrame {
 
         // Input fields and button
         JTextField titleField = new JTextField(10);
-        JTextField descriptionField = new JTextField(10);
+        JTextField descriptionField = new JTextField(30);
         JTextField dateField = new JTextField(10);
         JButton addButton = new JButton("Add Task");
 
